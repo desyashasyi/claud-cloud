@@ -60,7 +60,7 @@ jobs:
           conf=$(readlink -f "$files")
           echo "Config file: $conf"
 
-          if sudo grep -qE 'listen[^;]*443' "$conf"; then
+          if sudo grep -vE '^[[:space:]]*#' "$conf" | grep -qE 'listen[^;]*443'; then
             echo "::warning::$conf already listens on 443. Nothing changed."
             exit 0
           fi

@@ -52,7 +52,7 @@ jobs:
           echo "== Which server blocks listen on 443, in load order =="
           for f in /etc/nginx/sites-enabled/* /etc/nginx/conf.d/*.conf; do
             [ -f "$f" ] || continue
-            if grep -qE 'listen[^;]*443' "$f"; then
+            if grep -vE '^[[:space:]]*#' "$f" | grep -qE 'listen[^;]*443'; then
               names=$(grep -hoE 'server_name[^;]+' "$f" | sed 's/server_name//' | tr -s ' ' | sort -u | tr '\n' ' ')
               default=$(grep -qE 'listen[^;]*443[^;]*default_server' "$f" && echo ' [default_server]')
               echo "$f:$names$default"
