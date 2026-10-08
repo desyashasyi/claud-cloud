@@ -1,6 +1,6 @@
 # TechUPI — Landing Page
 
-`index.html` is the TechUPI landing page, introducing four platforms:
+`index.html` is the TechUPI landing page, introducing five platforms:
 
 | Platform | Purpose | Domain |
 |---|---|---|
@@ -8,6 +8,7 @@
 | Programee | Programming classes | https://programee.techupi.id |
 | CLab | Remote IoT laboratory | https://clab.techupi.id |
 | ArsipM | Archive & accreditation readiness | https://archim.techupi.id |
+| FetNet | Course timetabling (FET engine) | https://fetnet.techupi.id |
 
 App screenshots live in `screenshots/`; click any screenshot on the page to enlarge it.
 The page loads Tailwind CSS (CDN) and Font Awesome, so it needs an internet connection.
