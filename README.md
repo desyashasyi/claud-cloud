@@ -31,7 +31,7 @@ Add these repository secrets (Settings → Secrets and variables → Actions):
 |---|---|
 | `VPS_HOST` | Server IP or hostname |
 | `VPS_USER` | SSH user that can write to the web root |
-| `VPS_PATH` | Web root of techupi.id, e.g. `/var/www/techupi.id` |
+| `VPS_PATH` | Web root of techupi.id, e.g. `/var/www/techupi` |
 | `VPS_SSH_KEY` | Private key of a deploy key whose public key is in the user's `~/.ssh/authorized_keys` |
 | `VPS_PORT` | Optional, defaults to 22 |
 | `VPS_KNOWN_HOSTS` | Optional, output of `ssh-keyscan <host>`; otherwise the host key is scanned at deploy time |
