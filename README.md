@@ -1,13 +1,14 @@
 # TechUPI — Landing Page
 
-`index.html` adalah landing page TechUPI yang memperkenalkan empat platform:
+`index.html` is the TechUPI landing page, introducing four platforms:
 
-| Platform | Fungsi | Domain |
+| Platform | Purpose | Domain |
 |---|---|---|
-| ArSys | Manajemen tugas akhir | https://arsys.techupi.id |
-| Programee | Kelas pemrograman | https://programee.techupi.id |
-| IoT-CLab | Laboratorium IoT jarak jauh | https://clab.techupi.id |
-| ArsipM | Arsip & kelengkapan akreditasi | https://archim.techupi.id |
+| ArSys | Final project & thesis management | https://arsys.techupi.id |
+| Programee | Programming classes | https://programee.techupi.id |
+| IoT-CLab | Remote IoT laboratory | https://clab.techupi.id |
+| ArsipM | Archive & accreditation readiness | https://archim.techupi.id |
 
-Screenshot aplikasi ada di folder `screenshots/`; klik gambar di halaman untuk memperbesar.
-Halaman memakai Tailwind CSS (CDN) dan Font Awesome, jadi perlu koneksi internet saat dibuka.
+App screenshots live in `screenshots/`; click any screenshot on the page to enlarge it.
+The page loads Tailwind CSS (CDN) and Font Awesome, so it needs an internet connection.
+Deploy `index.html` together with the `screenshots/` folder.
