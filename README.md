@@ -1,5 +1,13 @@
-# Galeri Aplikasi
+# TechUPI — Landing Page
 
-Halaman `index.html` menampilkan tangkapan layar aplikasi (ArSys, IoT-CLab, ArsipM, Programee). Gambar ada di folder `screenshots/`; klik gambar untuk memperbesar.
+`index.html` adalah landing page TechUPI yang memperkenalkan empat platform:
 
-Buka `index.html` langsung di browser, atau aktifkan GitHub Pages untuk branch ini.
+| Platform | Fungsi | Domain |
+|---|---|---|
+| ArSys | Manajemen tugas akhir | https://arsys.techupi.id |
+| Programee | Kelas pemrograman | https://programee.techupi.id |
+| IoT-CLab | Laboratorium IoT jarak jauh | https://clab.techupi.id |
+| ArsipM | Arsip & kelengkapan akreditasi | https://archim.techupi.id |
+
+Screenshot aplikasi ada di folder `screenshots/`; klik gambar di halaman untuk memperbesar.
+Halaman memakai Tailwind CSS (CDN) dan Font Awesome, jadi perlu koneksi internet saat dibuka.
