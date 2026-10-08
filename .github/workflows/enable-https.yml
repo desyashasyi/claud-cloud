@@ -1,0 +1,95 @@
+name: Enable HTTPS for one subdomain
+
+on:
+  workflow_dispatch:
+    inputs:
+      subdomain:
+        description: Subdomain that already has an Nginx server block on port 80, e.g. fetnet.techupi.id
+        required: true
+
+jobs:
+  enable-https:
+    runs-on: ubuntu-latest
+    env:
+      VPS_HOST: ${{ secrets.VPS_HOST }}
+      VPS_USER: ${{ secrets.VPS_USER }}
+      VPS_PORT: ${{ secrets.VPS_PORT }}
+      VPS_SSH_KEY: ${{ secrets.VPS_SSH_KEY }}
+      TARGET: ${{ inputs.subdomain }}
+    steps:
+      - name: Validate input
+        run: |
+          if ! printf '%s' "$TARGET" | grep -qE '^[a-z0-9-]+\.techupi\.id$'; then
+            echo "::error::Only single-level subdomains of techupi.id are allowed (e.g. fetnet.techupi.id)."
+            exit 1
+          fi
+
+      - name: Set up SSH
+        run: |
+          mkdir -p ~/.ssh && chmod 700 ~/.ssh
+          printf '%s\n' "$VPS_SSH_KEY" | tr -d '\r' > ~/.ssh/deploy_key
+          chmod 600 ~/.ssh/deploy_key
+          ssh-keyscan -T 15 -p "${VPS_PORT:-22}" "$VPS_HOST" > ~/.ssh/known_hosts
+          cat > ~/.ssh/config <<EOF
+          Host vps
+            HostName $VPS_HOST
+            User $VPS_USER
+            Port ${VPS_PORT:-22}
+            IdentityFile ~/.ssh/deploy_key
+            IdentitiesOnly yes
+          EOF
+
+      - name: Enable HTTPS with certbot (only this subdomain's server block)
+        run: |
+          ssh vps "TARGET='$TARGET' bash -s" <<'REMOTE'
+          set -euo pipefail
+
+          if ! sudo -n true 2>/dev/null; then
+            echo "::error::The SSH user cannot run sudo without a password, so certbot cannot run from here. Run on the server: sudo certbot --nginx -d $TARGET"
+            exit 1
+          fi
+
+          # Find the one config file whose server_name is exactly this host
+          files=$(sudo grep -lE "server_name[^;]*[[:space:]]${TARGET//./\\.}([[:space:];]|$)" /etc/nginx/sites-enabled/* /etc/nginx/conf.d/*.conf 2>/dev/null || true)
+          count=$(printf '%s\n' "$files" | sed '/^$/d' | wc -l)
+          if [ "$count" -ne 1 ]; then
+            echo "::error::Expected exactly one Nginx config with server_name $TARGET, found $count. Nothing changed."
+            printf '%s\n' "$files"
+            exit 1
+          fi
+          conf=$(readlink -f "$files")
+          echo "Config file: $conf"
+
+          if sudo grep -qE 'listen[^;]*443' "$conf"; then
+            echo "::warning::$conf already listens on 443. Nothing changed."
+            exit 0
+          fi
+
+          backup="$HOME/nginx-backups/$(date +%Y%m%d-%H%M%S)"
+          mkdir -p "$backup"
+          sudo cp -a "$conf" "$backup/"
+          sudo chown -R "$(id -u):$(id -g)" "$backup"
+          echo "Backup saved to $backup"
+
+          sudo nginx -t
+
+          if ! sudo certbot --nginx -d "$TARGET" --redirect --non-interactive --keep-until-expiring; then
+            echo "::error::certbot failed. Restoring the backup."
+            sudo cp -a "$backup/$(basename "$conf")" "$conf"
+            sudo nginx -t && sudo systemctl reload nginx
+            exit 1
+          fi
+
+          if ! sudo nginx -t; then
+            echo "::error::Nginx config test failed after certbot. Restoring the backup."
+            sudo cp -a "$backup/$(basename "$conf")" "$conf"
+            sudo nginx -t && sudo systemctl reload nginx
+            exit 1
+          fi
+
+          echo
+          echo "== Certificate now presented for $TARGET =="
+          echo | openssl s_client -connect 127.0.0.1:443 -servername "$TARGET" 2>/dev/null | openssl x509 -noout -subject -ext subjectAltName
+          echo "== HTTPS response =="
+          curl -sk -o /dev/null -w 'status %{http_code}, redirect %{redirect_url}\n' --resolve "$TARGET:443:127.0.0.1" "https://$TARGET/"
+          REMOTE
