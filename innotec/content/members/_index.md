@@ -1,4 +1,4 @@
 ---
 title: "Members"
 ---
-The lecturers who make up the InnoTEC research group.
+Lecturers at Universitas Pendidikan Indonesia working across telecommunication, electronics, and computer engineering.

@@ -1,0 +1,3 @@
+{{ $m := dict }}
+{{ range site.Data.members.members }}{{ $m = merge $m (dict .key .name) }}{{ end }}
+{{ return $m }}

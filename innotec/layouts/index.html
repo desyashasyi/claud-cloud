@@ -1,45 +1,72 @@
 {{ define "main" }}
-<div class="hero">
+{{ $pubs := site.Data.publications.publications | default slice }}
+{{ $members := site.Data.members.members | default slice }}
+{{ $names := partial "member-map.html" . }}
+{{ $since := 0 }}{{ with sort $pubs "year" }}{{ $since = (index . 0).year }}{{ end }}
+<div class="masthead">
+  {{ partial "signal.html" . }}
   <div class="wrap">
-    <p class="eyebrow">Research group</p>
-    <h1>{{ site.Title }}</h1>
-    <p>{{ site.Params.tagline }}</p>
-    <p class="affiliation">{{ site.Params.affiliation }}</p>
+    <p class="eyebrow">Research group · {{ site.Params.affiliation }}</p>
+    <h1>Inno<span style="color:var(--brass-on-ink)">TEC</span> Research Group</h1>
+    <p class="tagline">Innovation in <b>T</b>elecommunication, <b>E</b>lectronics, and <b>C</b>omputer</p>
+    <p class="affiliation">{{ site.Params.address }}</p>
+    <div class="stats">
+      <div class="stat"><div class="num">{{ len $members }}</div><div class="label">Members</div></div>
+      <div class="stat"><div class="num">{{ len $pubs }}</div><div class="label">Publications</div></div>
+      <div class="stat"><div class="num">{{ len (where $pubs "type" "journal") }}</div><div class="label">Journal articles</div></div>
+      <div class="stat"><div class="num">{{ $since }}</div><div class="label">Publishing since</div></div>
+    </div>
   </div>
 </div>
 
 <main class="wrap">
-  {{ with .Content }}<section class="prose">{{ . }}</section>{{ end }}
+  {{ with .Content }}<section class="intro prose">{{ . }}</section>{{ end }}
 
   <section>
-    <h2 class="section-title">Research <a href="{{ "projects/" | relURL }}">All projects</a></h2>
-    {{ $projects := where site.RegularPages "Section" "projects" }}
-    {{ if $projects }}
-      <div class="grid">
-        {{ range first 3 $projects.ByWeight }}
-          <article class="card">
-            <h3><a href="{{ .RelPermalink }}">{{ .Title }}</a></h3>
-            <p>{{ .Summary | plainify | truncate 140 }}</p>
-          </article>
-        {{ end }}
-      </div>
-    {{ else }}
-      <p class="empty">No projects yet.</p>
-    {{ end }}
+    <div class="section-head"><h2>Research focus</h2></div>
+    <div class="focus">
+      <article>
+        <svg viewBox="0 0 32 32" aria-hidden="true"><path d="M16 18v11M12 29h8"/><circle cx="16" cy="15" r="2.5"/><path d="M10.5 9.5a8 8 0 0 0 0 11M21.5 9.5a8 8 0 0 1 0 11M6.5 5.5a14 14 0 0 0 0 19M25.5 5.5a14 14 0 0 1 0 19"/></svg>
+        <h3><b>T</b>elecommunication</h3>
+        <p>Antennas and arrays, radar systems, microwave components, and handoff in heterogeneous wireless networks.</p>
+      </article>
+      <article>
+        <svg viewBox="0 0 32 32" aria-hidden="true"><rect x="9" y="9" width="14" height="14" rx="1.5"/><rect x="13" y="13" width="6" height="6"/><path d="M13 9V4M19 9V4M13 28v-5M19 28v-5M9 13H4M9 19H4M28 13h-5M28 19h-5"/></svg>
+        <h3><b>E</b>lectronics</h3>
+        <p>Embedded systems and IoT devices, smart energy metering, thin-film materials, and instrumentation.</p>
+      </article>
+      <article>
+        <svg viewBox="0 0 32 32" aria-hidden="true"><rect x="4" y="6" width="24" height="16" rx="1.5"/><path d="M12 27h8M16 22v5M11 11l-3 3 3 3M21 11l3 3-3 3M17.5 10l-3 8"/></svg>
+        <h3><b>C</b>omputer</h3>
+        <p>Deep learning for UAVs, computer vision, serious games, and technology for engineering and vocational education.</p>
+      </article>
+    </div>
   </section>
 
   <section>
-    <h2 class="section-title">Latest news <a href="{{ "news/" | relURL }}">All news</a></h2>
-    {{ $news := where site.RegularPages "Section" "news" }}
-    {{ if $news }}
-      <ul class="news">
-        {{ range first 5 $news.ByDate.Reverse }}
-          <li><time datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date.Format "2 Jan 2006" }}</time><a href="{{ .RelPermalink }}">{{ .Title }}</a></li>
-        {{ end }}
-      </ul>
-    {{ else }}
-      <p class="empty">No news yet.</p>
-    {{ end }}
+    <div class="section-head"><h2>Members</h2><a href="{{ "members/" | relURL }}">All members</a></div>
+    <div class="people compact">
+      {{ range $members }}{{ partial "person.html" (dict "m" . "compact" true) }}{{ end }}
+    </div>
   </section>
+
+  <section>
+    <div class="section-head"><h2>Recent publications</h2><a href="{{ "publications/" | relURL }}">All {{ len $pubs }} publications</a></div>
+    {{ with first 5 (sort $pubs "year" "desc") }}
+      <ul class="pubs recent">{{ range . }}{{ partial "pub-item.html" (dict "p" . "names" $names) }}{{ end }}</ul>
+    {{ else }}<p class="empty">Publications will be listed here.</p>{{ end }}
+  </section>
+
+  {{ $news := where site.RegularPages "Section" "news" }}
+  {{ with $news }}
+  <section>
+    <div class="section-head"><h2>News</h2><a href="{{ "news/" | relURL }}">All news</a></div>
+    <ul class="pubs">
+      {{ range first 3 .ByDate.Reverse }}
+        <li><p class="pub-venue"><time datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date.Format "2 January 2006" }}</time></p><h3 class="pub-title"><a href="{{ .RelPermalink }}">{{ .Title }}</a></h3></li>
+      {{ end }}
+    </ul>
+  </section>
+  {{ end }}
 </main>
 {{ end }}

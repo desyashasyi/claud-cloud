@@ -1,13 +1,867 @@
-# One entry per publication. Newest year is listed first on the site.
-# doi, url, and pdf are optional.
-# TODO: add the group's real publications. Leave the list empty until then.
-publications: []
-
-# Example entry:
-#  - title: "Paper title"
-#    authors: ["A. Author", "B. Author"]
-#    venue: "Journal or conference name"
-#    year: 2026
-#    doi: "10.xxxx/xxxxx"
-#    url: ""
-#    pdf: ""
+# Publications of InnoTEC members, newest first.
+# Source: CVs supplied by the members (selected publications where the CV says so).
+# Fields:
+#   title, venue, year, type (journal | conference)       required
+#   members: InnoTEC member keys (see data/members.yaml)     required
+#   authors: full author list as printed in the CV           optional (left out when the CV does not list it)
+#   details: volume, issue, pages, or location               optional
+#   doi or url                                               optional
+publications:
+- title: Interference Mitigation of 24 GHz FMCW Sensor Using IQ-Channel Projection Method
+  members:
+  - tommi
+  venue: IEEE Sensors Journal
+  details: Vol. 26, No. 5
+  year: 2026
+  type: journal
+- title: Analysis of Data Communication Utilization on Smart Energy Meter
+  authors:
+  - Arjuni Budi Pantjawati
+  - Aip Saripudin
+  - Muhammad Husni Muttaqin
+  - Qintar Alifah Ristiana
+  - Fikri Fauzi
+  members:
+  - aip
+  - arjuni
+  venue: AIP Conference Proceedings
+  year: 2025
+  type: conference
+- title: Compact K-Band Phased Array Antenna with Orthogonal Calibration and Error Assessment
+  members:
+  - tommi
+  venue: IEEE Access
+  details: Vol. 13, pp. 163258–163275
+  year: 2025
+  type: journal
+- title: Design and Evaluation of C-Band Microstrip Antenna Array for Portable Ground Surveillance Radar
+  members:
+  - tommi
+  venue: Emerging Science Journal
+  details: Vol. 9, No. 6
+  year: 2025
+  type: journal
+- title: Design of Python Qt Meta-Object Language-based Smart Energy Meter
+  authors:
+  - Aip Saripudin
+  - Arjuni Budi Pantjawati
+  - Muhammad Husni Muttaqin
+  - Iffan Nur Ilman Syarifudin
+  - Imey Fitri Rahmadani
+  members:
+  - aip
+  - arjuni
+  venue: AIP Conference Proceedings
+  year: 2025
+  type: conference
+- title: Designing and Implementing Real-Time Deep Learning Object Detection in Unmanned Aerial Vehicles
+  members:
+  - iwan
+  venue: IIUM Engineering Journal
+  details: Vol. 26, No. 3
+  year: 2025
+  type: journal
+  url: https://journals.iium.edu.my/ejournal/index.php/iiumej/article/view/3433
+- title: Desain Sistem Smart Energy Meter dengan Indikator Pencurian Listrik berbasis Phyton QML
+  authors:
+  - I. N. I. Syarifudin
+  - A. B. Pantjawati
+  - A. Saripudin
+  members:
+  - aip
+  - arjuni
+  venue: TELKA – Jurnal Telekomunikasi, Elektronika, Komputasi dan Kontrol
+  details: Vol. 10, No. 1, pp. 76–85
+  year: 2024
+  type: journal
+- title: Desain dan Analisis Kinerja Smart Energy Meter Berbasis Android
+  authors:
+  - Qintar Alifah Ristiana
+  - Aip Saripudin
+  - Arjuni Budi Pantjawati
+  members:
+  - aip
+  - arjuni
+  venue: Jurnal Elektro dan Telekomunikasi Terapan
+  year: 2024
+  type: journal
+- title: Development of the Android Application for the Landslide Disaster Mitigation Real-time System based on Firebase Server and OneSignal
+  authors:
+  - Aif Umar Nawawi
+  - Arjuni Budi Pantjawati
+  - Aip Saripudin
+  - Nurul Fahmi Arief Hakim
+  - Nurhidayatulloh
+  - Novia Karostiani
+  - Bagaskara Anandayutya
+  - Alvin Dzaki Pratama Darmawan
+  members:
+  - aip
+  - arjuni
+  venue: Jurnal Elektronika dan Telekomunikasi
+  year: 2024
+  type: journal
+- title: Landslide Prediction Data Processing Using Logistic Regression Algorithm
+  authors:
+  - Alvin Dzaki Pratama Darmawan
+  - Aip Saripudin
+  - Arjuni Budi Pantjawati
+  - Nurul Fahmi Arief Hakim
+  - Novia Karostiani
+  - Bagaskara Anandayutya
+  members:
+  - aip
+  - arjuni
+  venue: 7th International Seminar on Research of Information Technology and Intelligent Systems (ISRITI)
+  year: 2024
+  type: conference
+- title: 'Light Intensity Distribution in the Room Using Light Dependent Resistor (LDR): Through the Engineering Design Process'
+  members:
+  - iwan
+  venue: Indonesian Journal of Science and Technology
+  details: Vol. 9, No. 3
+  year: 2024
+  type: journal
+  url: https://ejournal.upi.edu/index.php/ijost/article/view/74410/28515
+- title: Design and Evaluation of mmWave Backscatter Tag System for Internet of Things Applications
+  members:
+  - tommi
+  venue: General Assembly and Scientific Symposium of the International Union of Radio Science (URSI GASS)
+  year: 2023
+  type: conference
+  details: Sapporo, Japan
+- title: Design and Implementation of Wideband Patch Array Antenna for Unmanned Aerial Vehicle Communication
+  members:
+  - iwan
+  venue: International Conference for Advancement in Technology (ICONAT)
+  year: 2023
+  type: conference
+- title: 'Online Learning Using STEM-Based Media: To Improve Mathematics Abilities of Vocational High School Students'
+  authors:
+  - D. Rohendi
+  - D. Wahyudin
+  - I. H. Kusumah
+  members:
+  - didin
+  venue: International Journal of Instruction
+  details: Vol. 16, No. 1, pp. 377–392
+  year: 2023
+  type: journal
+  doi: 10.29333/iji.2023.16121a
+- title: Sidelobe Reduction Using Proximity Coupled Dolph Tschebyscheff Array Antenna for Wi-Fi 6E
+  members:
+  - iwan
+  venue: 17th International Conference on Telecommunication Systems, Services, and Applications (TSSA)
+  year: 2023
+  type: conference
+  url: https://ieeexplore.ieee.org/document/10366979
+- title: Ultra-wideband Wilkinson Power Divider Using Stepped Impedance for Communication System
+  members:
+  - iwan
+  - tommi
+  venue: 17th International Conference on Telecommunication Systems, Services, and Applications (TSSA)
+  details: Lombok
+  year: 2023
+  type: conference
+  url: https://ieeexplore.ieee.org/document/10366921
+- title: Video Live Streaming System on Unmanned Aerial Vehicles (UAVs) Using Autonomous Waypoint Navigation to Support Traffic Monitoring System
+  members:
+  - iwan
+  venue: 9th International Conference on Wireless and Telematics (ICWT)
+  details: pp. 1–5
+  year: 2023
+  type: conference
+  url: https://ieeexplore.ieee.org/document/10335464
+- title: Analysis of Student Interests in the Electrical Engineering Education Study Program FPTK UPI in the Vocational Teacher Profession in the 4.0 Education Era
+  authors:
+  - N. Mustika
+  - Mukhidin
+  - A. Saripudin
+  members:
+  - aip
+  venue: Advances in Social Science, Education and Humanities Research
+  year: 2022
+  type: conference
+- title: Analysis of UWB Wilkinson Power Divider Design Using 4-Stepped Patch and Ring Structure
+  members:
+  - tommi
+  venue: International Conference on Telecommunication Systems, Services, and Applications (TSSA)
+  year: 2022
+  type: conference
+  details: Lombok
+- title: Beam Scanning Angle Performance Improvement in High Gain Antenna Array with Nonuniform Amplitude Distribution
+  members:
+  - tommi
+  venue: Information and Communication Equipment Summer Conference
+  year: 2022
+  type: conference
+  details: Jeongseon, South Korea
+- title: Changes in the Learning Paradigm during the Covid-19 Pandemic
+  members:
+  - iwan
+  venue: IEEE International Conference on Teaching, Assessment and Learning for Engineering (TALE)
+  year: 2022
+  type: conference
+  url: https://ieeexplore.ieee.org/abstract/document/10148207
+- title: Modification of Monopole Flower-Shaped Patch Ultra-Wideband Antenna for Communication Systems
+  members:
+  - tommi
+  venue: International Conference on Telecommunication Systems, Services, and Applications (TSSA)
+  year: 2022
+  type: conference
+  details: Lombok
+- title: Pelatihan Microsoft Office Specialist (MOS) PowerPoint sebagai Media Pembelajaran untuk Guru SMKN 1 Cisarua dalam Era Industri 4.0
+  authors:
+  - M. A. Qibtiya
+  - D. L. Hakim
+  - B. Trisno
+  - B. Mulyanti
+  - Y. Mulyadi
+  - T. Suartini
+  - E. Mulyana
+  - W. Purnama
+  - A. Saripudin
+  - S. Azhima
+  - R. E. Pawinanto
+  - Nurhidayatulloh
+  members:
+  - aip
+  venue: Jurnal Ilmiah Teknologi Informasi Terapan
+  year: 2022
+  type: journal
+- title: Ultra-Wideband Spiral Antenna with Back Lobe Reduction for Communication Systems
+  members:
+  - tommi
+  venue: International Journal on Communications Antenna and Propagation (IRECAP)
+  details: Vol. 12, No. 1, Art. no. 1
+  year: 2022
+  type: journal
+- title: Underwater Wireless Optical Communication Using Li-Fi Technology in Data Transmission
+  authors:
+  - L. S. J. Intaniawati
+  - A. B. Pantjawati
+  - A. Saripudin
+  - Nurhidayatulloh
+  members:
+  - aip
+  - arjuni
+  venue: International Seminar on Research of Information Technology and Intelligent Systems (ISRITI)
+  year: 2022
+  type: conference
+- title: X-Band Planar Antenna Array with Chebyshev Amplitude Distribution to Suppress Sidelobe Level
+  members:
+  - tommi
+  venue: International Symposium on Advanced Electromagnetic Engineering and Science (ISAEES)
+  year: 2022
+  type: conference
+  details: Pyeongchang, South Korea
+- title: Implementation of C-Band Antenna for Man-Portable Ground Surveillance Radar
+  members:
+  - tommi
+  venue: International Conference on Wireless and Telematics (ICWT)
+  year: 2021
+  type: conference
+  details: Bandung
+- title: Smart Traffic Light System Design Based on Single Shot MultiBox Detector (SSD) and AnyLogic Simulation
+  authors:
+  - E. R. Salim
+  - A. B. Pantjawati
+  - D. Kuswardhana
+  - A. Saripudin
+  - N. D. Jayanto
+  - L. A. Pratama
+  members:
+  - aip
+  - arjuni
+  venue: 'Innovative Systems for Intelligent Health Informatics: Data Science, Health Informatics, Intelligent Systems, Smart Computing'
+  year: 2021
+  type: conference
+- title: Bandwidth and Gain Enhancement of 2×2 Microstrip Patch Antenna Array Using Metamaterial at 2.4 GHz
+  members:
+  - tommi
+  venue: Journal of Engineering Science and Technology (JESTEC)
+  details: Vol. 15, No. 6, pp. 4157–4170
+  year: 2020
+  type: journal
+- title: 'Curriculum Innovation at a Vocational High School: A Digital Library for Batik Learning'
+  authors:
+  - I. Widiaty
+  - D. Wahyudin
+  - A. G. Abdullah
+  - C. Riyana
+  members:
+  - didin
+  venue: Journal of Engineering Science and Technology (JESTEC)
+  details: Vol. 15, No. 6, pp. 4123–4133
+  year: 2020
+  type: journal
+- title: Design and Development of Band Pass Filter Microstrip Cascade Trisection with Open Stub and Defected Ground Structure (DGS) in 1800 MHz Frequency
+  members:
+  - tommi
+  venue: Journal of Engineering Science and Technology (JESTEC)
+  details: Vol. 15, No. 1
+  year: 2020
+  type: journal
+- title: Design of Horizontal Polarization Microstrip Patch Antenna with Bandwidth Enhancement at C-Band Frequency
+  members:
+  - tommi
+  venue: International Conference on Vocational Education and Electrical Engineering (ICVEE)
+  year: 2020
+  type: conference
+  details: Surabaya
+- title: Design of X-Band Microstrip Antenna for Circularly Polarized Synthetic Aperture Radar (CP-SAR) System
+  members:
+  - tommi
+  venue: International Conference on Vocational Education and Electrical Engineering (ICVEE)
+  year: 2020
+  type: conference
+  details: Surabaya
+- title: Design of a Compact UWB Wilkinson Power Divider Using Ring Structured and Tapered Line Matching Transformer
+  authors:
+  - R. N. Yuniar
+  - T. Hariyadi
+  - A. Saripudin
+  - B. Mulyanti
+  members:
+  - aip
+  - tommi
+  venue: 'IOP Conference Series: Materials Science and Engineering'
+  year: 2020
+  type: conference
+- title: Optimal Distributed Generation Placement to Reduce Power Loss Using Particle Swarm Optimization Method
+  authors:
+  - M. G. Firmansyah
+  - Y. Mulyadi
+  - Hasbullah
+  - A. Saripudin
+  members:
+  - aip
+  venue: 'IOP Conference Series: Materials Science and Engineering'
+  year: 2020
+  type: conference
+- title: Optimization of Capacitor Capacity to Reduce Electric Power Losses in Distribution Networks in Jampang Kulon Sukabumi
+  authors:
+  - J. Nurrizkiani
+  - Hasbullah
+  - A. Saripudin
+  members:
+  - aip
+  venue: 'IOP Conference Series: Materials Science and Engineering'
+  year: 2020
+  type: conference
+- title: Development of an Application of Critical Thinking Skills Tools Using Fuzzy Expert System
+  members:
+  - iwan
+  venue: Journal of Engineering Science and Technology
+  details: Vol. 14, No. 6
+  year: 2019
+  type: journal
+  url: https://jestec.taylors.edu.my/Vol%2014%20issue%206%20December%202019/14_6_1.pdf
+- title: The Effect of Split Ring Resonator (SRR) Metamaterials on the Bandwidth of Circular Microstrip Patch Antennas
+  members:
+  - tommi
+  venue: International Conference on Education, Science and Technology
+  year: 2019
+  type: conference
+  details: Padang
+- title: Characterization of Co:TiO2 Thin Film Grown by MOCVD Technique
+  authors:
+  - A. Saripudin
+  - W. Purnama
+  members:
+  - aip
+  venue: 'IOP Conference Series: Materials Science and Engineering'
+  year: 2018
+  type: conference
+- title: Directional 2x2 MIMO Microstrip Antenna Design and Optimization for LTE Band-3 Application
+  members:
+  - tommi
+  venue: International Conference on Information Technology, Computer, and Electrical Engineering (ICITACEE)
+  year: 2018
+  type: conference
+  details: Semarang
+- title: Modified Ultra-Wideband (UWB) Antipodal Vivaldi Antenna for 5G
+  members:
+  - tommi
+  venue: International Journal of Electrical and Computer Engineering (IJECE)
+  details: Vol. 8, No. 5
+  year: 2018
+  type: journal
+- title: Omnidirectional MIMO Antenna with Collinear Array for LTE Applications
+  members:
+  - tommi
+  venue: Pertanika
+  details: Vol. 26, No. 1
+  year: 2018
+  type: journal
+- title: Radio Altimeter (Radalt) Simulator on Aircraft Using Arduino UNO
+  authors:
+  - A. R. Ramdhani
+  - A. Saripudin
+  members:
+  - aip
+  venue: 'IOP Conference Series: Materials Science and Engineering'
+  year: 2018
+  type: conference
+- title: Simulation of Design and Implementation of Smart Socket Prototype Controlled by Android Application
+  authors:
+  - R. A. Wahyudi
+  - A. Saripudin
+  - A. H. S. Budi
+  members:
+  - aip
+  venue: 'IOP Conference Series: Materials Science and Engineering'
+  year: 2018
+  type: conference
+- title: A Remote PLC Laboratory (RLab) for Distance Practical Work of Industrial Automation
+  authors:
+  - E. Haritman
+  - Y. Somantri
+  - D. Wahyudin
+  - E. Mulyana
+  members:
+  - didin
+  venue: International Conference on Innovation in Engineering and Vocational Education (ICIEVE)
+  details: Manado
+  year: 2017
+  type: conference
+  doi: 10.1088/1757-899X/306/1/012034
+- title: An 8-Slotted Waveguide Antenna with Cross-Shaped Slot at 2.3 GHz for LTE Applications
+  members:
+  - tommi
+  venue: Pertanika
+  details: Vol. 25
+  year: 2017
+  type: journal
+- title: An Analysis of Website Accessibility in Higher Education in Indonesia Based on WCAG 2.0 Guidelines
+  authors:
+  - W. A. Rasid
+  - A. G. Abdullah
+  - D. Wahyudin
+  - et al.
+  members:
+  - didin
+  venue: International Conference on Innovation in Engineering and Vocational Education (ICIEVE)
+  details: Manado
+  year: 2017
+  type: conference
+  doi: 10.1088/1757-899X/306/1/012130
+- title: An Intelligent Handoff Strategy in Heterogeneous Wireless Networks
+  members:
+  - iwan
+  venue: Journal of Intelligent & Fuzzy Systems
+  details: Vol. 32, No. 5
+  year: 2017
+  type: journal
+  doi: 10.3233/JIFS-169273
+- title: Design and Simulation of Microstrip Hairpin Bandpass Filter with Open Stub and Defected Ground Structure (DGS) at X-Band Frequency
+  members:
+  - tommi
+  venue: International Conference on Innovation in Engineering and Vocational Education (ICIEVE)
+  year: 2017
+  type: conference
+  details: Manado
+- title: Design of a 1:12 Power Divider at 5 GHz for Ground Surveillance Radar Application
+  members:
+  - tommi
+  venue: International Symposium on Materials and Electrical Engineering (ISMEE)
+  year: 2017
+  type: conference
+  details: Bandung
+- title: Design of a Directional Microstrip Antenna at UHF-Band for Passive Radar Application
+  members:
+  - tommi
+  venue: International Symposium on Materials and Electrical Engineering (ISMEE)
+  year: 2017
+  type: conference
+  details: Bandung
+- title: Design of a High Gain Circularly Polarized Microstrip Antenna for GPS Receiver
+  members:
+  - tommi
+  venue: International Symposium on Materials and Electrical Engineering (ISMEE)
+  year: 2017
+  type: conference
+  details: Bandung
+- title: Evaluation of an Affordable Wireless Node Sensor (Mote69) Designed for Internet of Things (IoT) Device
+  authors:
+  - Z. F. Ruhiyat
+  - Y. Somantri
+  - D. Wahyudin
+  - D. L. Hakim
+  members:
+  - didin
+  venue: International Conference on Innovation in Engineering and Vocational Education (ICIEVE)
+  details: Manado
+  year: 2017
+  type: conference
+  doi: 10.1088/1757-899X/306/1/012033
+- title: Magnetic Properties of Co:TiO2 Thin Films with Low Cobalt Concentration
+  authors:
+  - A. Saripudin
+  - W. Purnama
+  - D. L. Hakim
+  - M. Somantri
+  members:
+  - aip
+  venue: Pertanika Journal of Social Sciences & Humanities
+  year: 2017
+  type: journal
+- title: Parametric Study of an Ultra-wideband 2–18 GHz Microstrip to Coplanar Stripline Transition
+  members:
+  - tommi
+  venue: International Symposium on Materials and Electrical Engineering (ISMEE)
+  year: 2017
+  type: conference
+  details: Bandung
+- title: Performance of Groundplane Shaping in Four-Element Dualband MIMO Antenna
+  members:
+  - tommi
+  venue: Telkomnika
+  details: Vol. 15, No. 1
+  year: 2017
+  type: journal
+- title: Personal Computer-less (PC-less) Microcontroller Training Kit
+  authors:
+  - Y. Somantri
+  - D. Wahyudin
+  - I. Fushilat
+  members:
+  - didin
+  venue: International Conference on Innovation in Engineering and Vocational Education (ICIEVE)
+  details: Manado
+  year: 2017
+  type: conference
+  doi: 10.1088/1757-899X/306/1/012135
+- title: Vertical Handoff Decision Using Fuzzification and Combinatorial Fusion
+  members:
+  - iwan
+  venue: IEEE Communications Letters
+  details: Vol. 21, No. 9
+  year: 2017
+  type: journal
+  url: https://ieeexplore.ieee.org/document/7935517
+- title: A Small Ultra-Wideband Unidirectional Microstrip Antenna for Through-Wall Radar Application
+  members:
+  - tommi
+  venue: Journal of Telecommunication, Electronic, and Computer Engineering
+  details: Vol. 8, No. 1
+  year: 2016
+  type: journal
+- title: Design and Realization of Multi-wide-band FMCW Radar for Educational Purposes
+  members:
+  - tommi
+  venue: International Conference on Telecommunication Systems, Services and Applications (TSSA)
+  year: 2016
+  type: conference
+  details: Bali
+- title: Design and Simulation of Omnidirectional MIMO Microstrip Antenna at 1.8 GHz for LTE Applications
+  members:
+  - tommi
+  venue: International Conference on Radar, Antenna, Microwave, Electronics, and Telecommunications (ICRAMET)
+  year: 2016
+  type: conference
+- title: Design of Vivaldi Microstrip Antenna for Ultra-Wideband Radar Applications
+  members:
+  - tommi
+  venue: Annual Applied Science and Engineering Conference (AASEC)
+  year: 2016
+  type: conference
+  details: Bandung
+- title: Effect of Partial Groundplane on 4-Element MIMO Antenna Performance for 2300 MHz (Band 40)
+  members:
+  - tommi
+  venue: Asia-Pacific Conference on Communications (APCC)
+  year: 2016
+  type: conference
+  details: Yogyakarta
+- title: Growth Mechanism of Co:TiO2 Thin Film Deposited by Metal Organic Chemical Vapor Deposition Technique
+  authors:
+  - A. Saripudin
+  - P. Arifin
+  members:
+  - aip
+  venue: 'IOP Conference Series: Materials Science and Engineering'
+  details: Vol. 128
+  year: 2016
+  type: conference
+- title: Mobile Serious Game Design for Training Ethical Decision Making Skills of Inexperienced Disaster Volunteers
+  authors:
+  - Didin Wahyudin
+  - Shinobu Hasegawa
+  members:
+  - didin
+  venue: The Journal of Information and Systems in Education
+  details: Vol. 14, No. 1, pp. 28–41
+  year: 2016
+  type: journal
+  doi: 10.12937/ejsise.14.28
+- title: Students' Viewpoint of Computer Game for Training in Indonesian Universities and High Schools
+  authors:
+  - D. Wahyudin
+  - S. Hasegawa
+  - A. Kamaludin
+  members:
+  - didin
+  venue: Education and Information Technologies
+  year: 2016
+  type: journal
+  doi: 10.1007/s10639-016-9522-9
+- title: Efek Doping Co pada Konstanta Kisi Film Tipis Polikristal TiO2 yang Dideposisikan dengan Teknik MOCVD
+  authors:
+  - A. Saripudin
+  members:
+  - aip
+  venue: Jurnal Fisika
+  year: 2015
+  type: journal
+- title: Handoff Decision Using a Kalman Filter and Fuzzy Logic in Heterogeneous Wireless Networks
+  members:
+  - iwan
+  venue: IEEE Communications Letters
+  details: Vol. 19, No. 12
+  year: 2015
+  type: journal
+  url: https://ieeexplore.ieee.org/document/7307982
+- title: Learners' Perspectives of the Mobile Serious Game for Training Inexperienced Disaster Responders
+  authors:
+  - Didin Wahyudin
+  - Shinobu Hasegawa
+  members:
+  - didin
+  venue: 'E-Learn: World Conference on E-Learning in Corporate, Government, Healthcare, and Higher Education'
+  details: pp. 1639–1646, Hawaii, USA
+  year: 2015
+  type: conference
+- title: Optical Response of Columnar TiO2:Co on Si Substrate
+  authors:
+  - G. P. Anggraeni
+  - A. Saripudin
+  - A. Rusydi
+  - Y. Darma
+  members:
+  - aip
+  venue: AIP Conference Proceedings
+  year: 2015
+  type: conference
+- title: Performance Analysis of Transceiver 4x4 Space Time Block Coded MIMO-OFDM System
+  members:
+  - tommi
+  venue: International Conference on Information Technology, Computer, and Electrical Engineering (ICITACEE)
+  year: 2015
+  type: conference
+  details: Semarang
+- title: Simple, Easy-use and Low-cost Software for Design of Single and Cascaded Microring Resonators Using Semi-numerical Method
+  members:
+  - tommi
+  venue: Telkomnika
+  details: Vol. 13, No. 3
+  year: 2015
+  type: journal
+- title: Simulation of Single Microring Resonator (MRR) Using FDTD Technique for Sensing Applications
+  members:
+  - tommi
+  venue: 1st Joint Conference Indonesia–Malaysia–Bangladesh–Ireland (IJCIMBI)
+  year: 2015
+  type: conference
+  details: Banda Aceh
+- title: Studi Parametrik Antena Vivaldi Slot dengan Pencatuan Mikrostrip
+  members:
+  - tommi
+  venue: Seminar Nasional Teknologi (SENATEK)
+  year: 2015
+  type: conference
+  details: Malang
+- title: The Influence of Glucose Concentration to Resonant Wavelength Shift of Polymer-based Microring Resonators
+  members:
+  - tommi
+  venue: Advanced Materials Research
+  details: Vol. 1112
+  year: 2015
+  type: journal
+- title: A Design Pattern of Role Playing Game for Supporting Ethical Gameplay
+  authors:
+  - Didin Wahyudin
+  - Shinobu Hasegawa
+  members:
+  - didin
+  venue: 22nd International Conference on Computers in Education (ICCE)
+  details: Nara, Japan
+  year: 2014
+  type: conference
+- title: Antena Mikrostrip Monopole Pita Lebar Segi Empat untuk Aplikasi DVB-T
+  members:
+  - tommi
+  venue: Electrans
+  details: Vol. 13, No. 2
+  year: 2014
+  type: journal
+- title: Design and Optimization of Coupled Microring Resonators (MRRs) in Silicon-on-Insulator
+  members:
+  - tommi
+  venue: Sains Malaysiana
+  details: Vol. 43, No. 2
+  year: 2014
+  type: journal
+- title: Effect of Growth Temperature on Cobalt-Doped TiO2 Thin Films Deposited on Si (100) Substrate by MOCVD Technique
+  authors:
+  - A. Saripudin
+  - H. Saragih
+  - Khairurrijal
+  - P. Arifin
+  members:
+  - aip
+  venue: Advanced Materials Research
+  year: 2014
+  type: journal
+- title: Game Narrative for Situating Ethical Dilemmas in Virtual Disaster Response Work
+  authors:
+  - Didin Wahyudin
+  - Shinobu Hasegawa
+  members:
+  - didin
+  venue: 45th International Simulation and Gaming Association Conference (ISAGA)
+  details: Dornbirn, Austria
+  year: 2014
+  type: conference
+- title: Perancangan Antena Fraktal Ultra-Wideband
+  members:
+  - tommi
+  venue: Electrans
+  details: Vol. 13, No. 1
+  year: 2014
+  type: journal
+- title: Perancangan Antena Waveguide 6 Slot pada Frekuensi 2,3 GHz untuk Aplikasi LTE-TDD
+  members:
+  - tommi
+  venue: Electrans
+  details: Vol. 13, No. 2
+  year: 2014
+  type: journal
+- title: Perancangan Band Pass Filter Mikrostrip Hairpin dengan Open Stub dan Defected Ground Structure pada Pita Frekuensi UMTS (1920 MHz – 1980 MHz)
+  members:
+  - tommi
+  venue: Seminar Nasional Microwave, Antena dan Propagasi (SMAP)
+  year: 2014
+  type: conference
+  details: Jakarta
+- title: Rancang Bangun Antena Planar Monopole Mikrostrip untuk Aplikasi Ultra-Wideband (UWB)
+  members:
+  - tommi
+  venue: Electrans
+  details: Vol. 13, No. 2
+  year: 2014
+  type: journal
+- title: Rancang Bangun Band Pass Filter Mikrostrip Hairpin dengan Open Stub dan Defected Ground Structure (DGS) untuk Frekuensi UMTS 3G (1920–1980 MHz)
+  members:
+  - tommi
+  venue: Electrans
+  details: Vol. 13, No. 2
+  year: 2014
+  type: journal
+- title: A Coplanar Waveguide (CPW) Wideband Octagonal Microstrip Antenna
+  members:
+  - tommi
+  venue: International Conference of Information and Communication Technology (ICoICT)
+  year: 2013
+  type: conference
+  details: Bandung
+- title: A Game-enhanced Learning Approach for Developing Decision-making Skill of Novice Volunteer in Natural Disaster Response
+  authors:
+  - Didin Wahyudin
+  - Shinobu Hasegawa
+  members:
+  - didin
+  venue: 27th Annual Conference of the Japanese Society for Artificial Intelligence
+  details: 4J1-OS-23-2 (in Japanese)
+  year: 2013
+  type: conference
+- title: Antena Mikrostrip Monopole dengan Slot untuk Aplikasi DVB-T
+  members:
+  - tommi
+  venue: Electrans
+  details: Vol. 12, No. 2
+  year: 2013
+  type: journal
+- title: Design and Implementation of Moving Object Tracker for UAV/Rocket Ground Station
+  members:
+  - tommi
+  venue: International Conference of Information and Communication Technology (ICoICT)
+  year: 2013
+  type: conference
+  details: Bandung
+- title: Design of Microstrip Antenna for LTE (Long Term Evolution) 700 MHz Applications
+  members:
+  - tommi
+  venue: International Conference of Information and Communication Technology (ICoICT)
+  year: 2013
+  type: conference
+  details: Bandung
+- title: Developing Ethical Decision Making Skill of Novice Volunteers in Natural Disaster Response
+  authors:
+  - Didin Wahyudin
+  - Shinobu Hasegawa
+  - Tina Dahlan
+  members:
+  - didin
+  venue: 7th European Conference on Games Based Learning (ECGBL)
+  details: pp. 800–803, Porto, Portugal
+  year: 2013
+  type: conference
+- title: Disain dan Simulasi Antena Mikrostrip untuk Aplikasi GSM/EDGE dan UMTS/HSDPA (3G)
+  members:
+  - tommi
+  venue: Electrans
+  details: Vol. 12, No. 1
+  year: 2013
+  type: journal
+- title: Mobile Game Based Learning to Develop Ethical Decision Making Skill of Novice Volunteer in Disaster Response
+  authors:
+  - Didin Wahyudin
+  - Shinobu Hasegawa
+  - Tina Dahlan
+  members:
+  - didin
+  venue: 21st International Conference on Computers in Education (ICCE)
+  details: pp. 590–599, Bali, Indonesia
+  year: 2013
+  type: conference
+- title: Mobile Game Based Learning to Develop Ethical Decision Making Skill of Novice Volunteer in Disaster Response (Doctoral Student Consortium)
+  authors:
+  - Didin Wahyudin
+  members:
+  - didin
+  venue: 21st International Conference on Computers in Education (ICCE)
+  details: Bali, Indonesia
+  year: 2013
+  type: conference
+- title: Perancangan dan Realisasi Antena Monopole Pita Lebar untuk Aplikasi DCS, UMTS, dan HSPA
+  members:
+  - tommi
+  venue: Seminar Nasional Microwave, Antena dan Propagasi (SMAP)
+  year: 2013
+  type: conference
+  details: Jakarta
+- title: Rancang Bangun Antena Yagi 6 Elemen untuk Meningkatkan Penerimaan Sinyal EVDO pada Rentang Frekuensi 800–900 MHz
+  members:
+  - tommi
+  venue: Forum Pendidikan Tinggi Teknik Elektro Indonesia (FORTEI)
+  year: 2013
+  type: conference
+  details: Padang
+- title: Mobile Game Based Learning to Encourage Decision-making Skill in Natural Disaster Response Management
+  authors:
+  - Didin Wahyudin
+  - Shinobu Hasegawa
+  members:
+  - didin
+  venue: SIG-ALST (JSAI) Conference
+  details: B202, pp. 27–30, Yokohama, Japan
+  year: 2012
+  type: conference
+- title: Unidirectional Broadband Microstrip Antenna for Through Wall Radar Application
+  members:
+  - tommi
+  venue: International Conference on Electrical Engineering and Informatics (ICEEI)
+  year: 2011
+  type: conference
+  details: Bandung

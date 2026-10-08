@@ -1,18 +1,21 @@
 {{ define "main" }}
+{{ partial "masthead.html" . }}
+{{ $pubs := site.Data.publications.publications | default slice }}
 <main class="wrap">
-  <h1 class="page-title">{{ .Title }}</h1>
-  {{ with .Content }}<div class="lead prose">{{ . }}</div>{{ end }}
-
-  {{ $groups := slice "Faculty" "Researchers" "Students" "Alumni" }}
   {{ $members := site.Data.members.members | default slice }}
-  {{ range $groups }}
+  {{ range slice "Faculty" "Researchers" "Students" "Alumni" }}
     {{ $group := . }}
-    {{ $inGroup := where $members "group" $group }}
-    {{ with $inGroup }}
-      <h2 class="group-label">{{ $group }}</h2>
-      <div class="grid">
-        {{ range . }}{{ partial "member-card.html" . }}{{ end }}
-      </div>
+    {{ with where $members "group" $group }}
+      <section>
+        <p class="group-label">{{ $group }}</p>
+        <div class="people">
+          {{ range . }}
+            {{ $key := .key }}{{ $n := 0 }}
+            {{ range $pubs }}{{ if in .members $key }}{{ $n = add $n 1 }}{{ end }}{{ end }}
+            {{ partial "person.html" (dict "m" . "count" $n "compact" false) }}
+          {{ end }}
+        </div>
+      </section>
     {{ end }}
   {{ end }}
   {{ if not $members }}<p class="empty">Members will be listed here.</p>{{ end }}

@@ -1,11 +1,16 @@
-<li>
-  <div class="title">{{ .title }}</div>
-  <div class="meta">{{ delimit .authors ", " }}{{ with .venue }}. <em>{{ . }}</em>{{ end }}{{ with .year }}, {{ . }}{{ end }}.</div>
-  {{ if or .doi .url .pdf }}
-  <div class="links">
-    {{ with .doi }}<a href="https://doi.org/{{ . }}" rel="noopener">DOI</a>{{ end }}
-    {{ with .url }}<a href="{{ . }}" rel="noopener">Link</a>{{ end }}
-    {{ with .pdf }}<a href="{{ . }}" rel="noopener">PDF</a>{{ end }}
-  </div>
+{{ $p := .p }}{{ $names := .names }}
+{{ $who := slice }}{{ range $p.members }}{{ $who = $who | append (index $names .) }}{{ end }}
+<li data-type="{{ $p.type }}" data-members="{{ delimit $p.members " " }}" data-text="{{ lower (printf "%s %s %s %s" $p.title $p.venue (delimit ($p.authors | default slice) " ") (delimit $who " ")) }}">
+  <h3 class="pub-title">{{ $p.title }}</h3>
+  {{ with $p.authors }}
+    <p class="pub-authors">{{ delimit . ", " }}</p>
+  {{ else }}
+    <p class="pub-authors"><span class="member">{{ delimit $who ", " }}</span></p>
   {{ end }}
+  <p class="pub-venue"><em>{{ $p.venue }}</em>{{ with $p.details }}, {{ . }}{{ end }}, {{ $p.year }}.</p>
+  <div class="pub-foot">
+    <span class="badge {{ $p.type }}">{{ $p.type }}</span>
+    {{ with $p.doi }}<a href="https://doi.org/{{ . }}" rel="noopener">doi:{{ . }}</a>{{ end }}
+    {{ with $p.url }}<a href="{{ . }}" rel="noopener">View article</a>{{ end }}
+  </div>
 </li>

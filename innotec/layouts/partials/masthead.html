@@ -1,0 +1,9 @@
+{{/* Compact masthead for inner pages: . is the page */}}
+<div class="masthead compact">
+  {{ partial "signal.html" . }}
+  <div class="wrap">
+    <p class="eyebrow">{{ site.Title }}</p>
+    <h1 class="page-title">{{ .Title }}</h1>
+    {{ with .Content }}<div class="lead">{{ . }}</div>{{ end }}
+  </div>
+</div>

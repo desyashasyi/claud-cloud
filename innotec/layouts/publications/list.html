@@ -1,19 +1,86 @@
 {{ define "main" }}
+{{ partial "masthead.html" . }}
+{{ $pubs := site.Data.publications.publications | default slice }}
+{{ $names := partial "member-map.html" . }}
 <main class="wrap">
-  <h1 class="page-title">{{ .Title }}</h1>
-  {{ with .Content }}<div class="lead prose">{{ . }}</div>{{ end }}
-
-  {{ $pubs := site.Data.publications.publications | default slice }}
   {{ if $pubs }}
-    {{ $years := slice }}
-    {{ range $pubs }}{{ $years = $years | append (string .year) }}{{ end }}
-    {{ range (sort ($years | uniq) "value" "desc") }}
-      {{ $y := . }}
-      <h2 class="pub-year">{{ $y }}</h2>
-      <ol class="pubs">
-        {{ range $pubs }}{{ if eq (string .year) $y }}{{ partial "pub-item.html" . }}{{ end }}{{ end }}
-      </ol>
-    {{ end }}
+  <div class="toolbar" role="search">
+    <label class="visually-hidden" for="pub-search">Search publications</label>
+    <input id="pub-search" type="search" placeholder="Search title, venue, or author" autocomplete="off">
+    <div class="segmented" role="group" aria-label="Publication type">
+      <button type="button" data-type="all" aria-pressed="true">All</button>
+      <button type="button" data-type="journal" aria-pressed="false">Journals</button>
+      <button type="button" data-type="conference" aria-pressed="false">Conferences</button>
+    </div>
+    <label class="visually-hidden" for="pub-member">Member</label>
+    <select id="pub-member">
+      <option value="">All members</option>
+      {{ range site.Data.members.members }}<option value="{{ .key }}">{{ .name }}</option>{{ end }}
+    </select>
+  </div>
+  <p class="count" id="pub-count" aria-live="polite">{{ len $pubs }} publications</p>
+  <p class="note">Compiled from members' CVs. Where a CV does not list co-authors, only the InnoTEC member is shown.</p>
+
+  {{ $years := slice }}{{ range $pubs }}{{ $years = $years | append .year }}{{ end }}
+  {{ range sort ($years | uniq) "value" "desc" }}
+    {{ $y := . }}
+    <div class="year-block" data-year="{{ $y }}">
+      <h2>{{ $y }}</h2>
+      <ul class="pubs">
+        {{ range where $pubs "year" $y }}{{ partial "pub-item.html" (dict "p" . "names" $names) }}{{ end }}
+      </ul>
+    </div>
+  {{ end }}
+  <p class="empty" id="pub-none" hidden>No publications match these filters.</p>
+
+  <script>
+  (function () {
+    var search = document.getElementById('pub-search');
+    var member = document.getElementById('pub-member');
+    var buttons = document.querySelectorAll('.segmented button');
+    var items = document.querySelectorAll('.pubs li');
+    var blocks = document.querySelectorAll('.year-block');
+    var count = document.getElementById('pub-count');
+    var none = document.getElementById('pub-none');
+    var type = 'all';
+    var keys = Array.prototype.map.call(member.options, function (o) { return o.value; });
+    function fromHash() {
+      var k = location.hash.slice(1);
+      if (keys.indexOf(k) > 0) { member.value = k; search.value = ''; }
+    }
+    fromHash();
+
+    function apply() {
+      var q = search.value.trim().toLowerCase();
+      var m = member.value;
+      var shown = 0;
+      items.forEach(function (li) {
+        var ok = (type === 'all' || li.dataset.type === type) &&
+                 (!m || (' ' + li.dataset.members + ' ').indexOf(' ' + m + ' ') !== -1) &&
+                 (!q || li.dataset.text.indexOf(q) !== -1);
+        li.hidden = !ok;
+        if (ok) shown++;
+      });
+      blocks.forEach(function (b) { b.hidden = !b.querySelector('li:not([hidden])'); });
+      count.textContent = shown === items.length ? items.length + ' publications' : 'Showing ' + shown + ' of ' + items.length + ' publications';
+      none.hidden = shown !== 0;
+    }
+    search.addEventListener('input', apply);
+    member.addEventListener('change', function () {
+      history.replaceState(null, '', member.value ? '#' + member.value : location.pathname);
+      apply();
+    });
+    buttons.forEach(function (b) {
+      b.addEventListener('click', function () {
+        type = b.dataset.type;
+        buttons.forEach(function (x) { x.setAttribute('aria-pressed', x === b ? 'true' : 'false'); });
+        apply();
+      });
+    });
+    window.addEventListener('hashchange', function () { fromHash(); apply(); });
+    apply();
+  })();
+  </script>
   {{ else }}
     <p class="empty">Publications will be listed here.</p>
   {{ end }}

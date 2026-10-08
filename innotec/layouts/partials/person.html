@@ -1,0 +1,10 @@
+{{ $m := .m }}{{ $count := .count }}{{ $compact := .compact }}
+<article class="person"{{ if not $compact }} id="{{ $m.key }}"{{ end }}>
+  {{ with $m.photo }}<img class="monogram" src="{{ . | relURL }}" alt="">{{ else }}<div class="monogram" aria-hidden="true">{{ $m.initial }}</div>{{ end }}
+  <h3>{{ $m.name }}</h3>
+  <p class="role">{{ $m.role }}</p>
+  {{ if not $compact }}
+    <p class="meta">{{ if $count }}<a href="{{ "publications/" | relURL }}#{{ $m.key }}">{{ $count }} publication{{ if ne $count 1 }}s{{ end }}</a>{{ else }}Publications coming soon{{ end }}</p>
+    {{ with $m.interests }}<p class="interests">{{ . }}</p>{{ end }}
+  {{ end }}
+</article>

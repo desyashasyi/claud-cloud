@@ -1,29 +1,36 @@
 # One entry per person. group must be one of: Faculty, Researchers, Students, Alumni.
-# initial: letter shown in the avatar circle when there is no photo.
-# photo is optional: put the image in static/images/ and write /images/name.jpg.
-# interests and link are optional.
+# key: short id used in data/publications.yaml (members field).
+# initial: letter shown in the avatar when there is no photo.
+# photo, interests, and link are optional. Photos go in static/images/.
 members:
-  - name: "Iwan Kustiawan, Ph.D"
-    initial: "I"
-    group: "Faculty"
-    role: "Head"
-  - name: "Dr. Aip Saripudin, M.T."
-    initial: "A"
-    group: "Faculty"
-    role: "Secretary"
-  - name: "Arjuni Budi Pantjawati, M.T."
-    initial: "A"
-    group: "Faculty"
-    role: "Member"
-  - name: "Didin Wahyudin, Ph.D"
-    initial: "D"
-    group: "Faculty"
-    role: "Member"
-  - name: "Siscka Elvyanti, Ph.D"
-    initial: "S"
-    group: "Faculty"
-    role: "Member"
-  - name: "Tommi Hariyadi, Ph.D"
-    initial: "T"
-    group: "Faculty"
-    role: "Member"
+- key: iwan
+  name: Iwan Kustiawan, Ph.D
+  initial: I
+  group: Faculty
+  role: Head
+- key: aip
+  name: Dr. Aip Saripudin, M.T.
+  initial: A
+  group: Faculty
+  role: Secretary
+- key: arjuni
+  name: Arjuni Budi Pantjawati, M.T.
+  initial: A
+  group: Faculty
+  role: Member
+- key: didin
+  name: Didin Wahyudin, Ph.D
+  initial: D
+  group: Faculty
+  role: Member
+  interests: Instructional design, computers in education, serious games and simulation, mobile HCI, Internet of Things, and embedded systems
+- key: siscka
+  name: Siscka Elvyanti, Ph.D
+  initial: S
+  group: Faculty
+  role: Member
+- key: tommi
+  name: Tommi Hariyadi, Ph.D
+  initial: T
+  group: Faculty
+  role: Member

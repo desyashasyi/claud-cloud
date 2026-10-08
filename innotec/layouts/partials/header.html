@@ -1,10 +1,10 @@
 <header class="site-header">
   <div class="wrap">
-    <a class="brand" href="{{ "/" | relURL }}">Inno<span>TEC</span></a>
+    <a class="brand" href="{{ "/" | relURL }}">Inno<b>TEC</b></a>
     <nav class="nav" aria-label="Main">
       {{ $current := . }}
       {{ range site.Menus.main }}
-        <a href="{{ .URL }}"{{ if $current.IsMenuCurrent "main" . }} aria-current="page"{{ end }}>{{ .Name }}</a>
+        <a href="{{ .URL }}"{{ if or ($current.IsMenuCurrent "main" .) ($current.HasMenuCurrent "main" .) }} aria-current="page"{{ end }}>{{ .Name }}</a>
       {{ end }}
     </nav>
   </div>
