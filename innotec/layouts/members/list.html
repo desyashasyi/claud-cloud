@@ -1,0 +1,20 @@
+{{ define "main" }}
+<main class="wrap">
+  <h1 class="page-title">{{ .Title }}</h1>
+  {{ with .Content }}<div class="lead prose">{{ . }}</div>{{ end }}
+
+  {{ $groups := slice "Faculty" "Researchers" "Students" "Alumni" }}
+  {{ $members := site.Data.members.members | default slice }}
+  {{ range $groups }}
+    {{ $group := . }}
+    {{ $inGroup := where $members "group" $group }}
+    {{ with $inGroup }}
+      <h2 class="group-label">{{ $group }}</h2>
+      <div class="grid">
+        {{ range . }}{{ partial "member-card.html" . }}{{ end }}
+      </div>
+    {{ end }}
+  {{ end }}
+  {{ if not $members }}<p class="empty">Members will be listed here.</p>{{ end }}
+</main>
+{{ end }}

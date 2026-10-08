@@ -38,3 +38,14 @@ Add these repository secrets (Settings → Secrets and variables → Actions):
 | `VPS_KNOWN_HOSTS` | Optional, output of `ssh-keyscan <host>`; otherwise the host key is scanned at deploy time |
 
 Until the required secrets exist, the workflow skips the deploy with a warning.
+
+## InnoTec research group site
+
+`innotec/` is a Hugo site for https://innotec.techupi.id, with its own templates (no external theme).
+
+- Members: `innotec/data/members.yaml`
+- Publications: `innotec/data/publications.yaml`
+- Research themes: one Markdown file per project in `innotec/content/projects/`
+- News: one Markdown file per post in `innotec/content/news/`
+
+Preview locally with `hugo server` inside `innotec/`. `.github/workflows/deploy-innotec.yml` builds the site and uploads it to `/var/www/innotec` on every push that changes `innotec/`, after the same safety checks as the landing page. Server setup: `deploy/nginx/innotec.techupi.id.conf`.

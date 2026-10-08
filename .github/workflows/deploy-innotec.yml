@@ -1,0 +1,102 @@
+name: Deploy innotec.techupi.id
+
+on:
+  push:
+    branches:
+      - main
+      - claude/revisi-tampilkan-screenshot-4oc643
+    paths:
+      - innotec/**
+      - .github/workflows/deploy-innotec.yml
+  workflow_dispatch:
+
+concurrency:
+  group: deploy-innotec
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    env:
+      SITE_HOST: innotec.techupi.id
+      SITE_PATH: /var/www/innotec
+      VPS_HOST: ${{ secrets.VPS_HOST }}
+      VPS_USER: ${{ secrets.VPS_USER }}
+      VPS_PORT: ${{ secrets.VPS_PORT }}
+      VPS_SSH_KEY: ${{ secrets.VPS_SSH_KEY }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Hugo
+        uses: peaceiris/actions-hugo@v3
+        with:
+          hugo-version: "0.140.2"
+
+      - name: Build the site
+        working-directory: innotec
+        run: hugo --minify --gc
+
+      - name: Set up SSH
+        run: |
+          mkdir -p ~/.ssh && chmod 700 ~/.ssh
+          printf '%s\n' "$VPS_SSH_KEY" | tr -d '\r' > ~/.ssh/deploy_key
+          chmod 600 ~/.ssh/deploy_key
+          if ! ssh-keyscan -T 15 -p "${VPS_PORT:-22}" "$VPS_HOST" > ~/.ssh/known_hosts || [ ! -s ~/.ssh/known_hosts ]; then
+            echo "::error::Cannot reach SSH on VPS_HOST."
+            exit 1
+          fi
+          cat > ~/.ssh/config <<EOF
+          Host vps
+            HostName $VPS_HOST
+            User $VPS_USER
+            Port ${VPS_PORT:-22}
+            IdentityFile ~/.ssh/deploy_key
+            IdentitiesOnly yes
+          EOF
+
+      - name: Safety checks (no changes)
+        run: |
+          ssh vps "SITE_HOST='$SITE_HOST' SITE_PATH='$SITE_PATH' bash -s" <<'REMOTE'
+          set -eu
+          [ -d "$SITE_PATH" ] || { echo "::error::$SITE_PATH does not exist on the server. Create it first (see deploy/nginx/innotec.techupi.id.conf)."; exit 1; }
+          [ -w "$SITE_PATH" ] || { echo "::error::The deploy user cannot write to $SITE_PATH."; exit 1; }
+
+          # SITE_PATH must be the root of the Nginx server block for SITE_HOST
+          host_re=$(printf '%s' "$SITE_HOST" | sed 's/\./\\./g')
+          found=""
+          for f in /etc/nginx/sites-enabled/* /etc/nginx/conf.d/*.conf; do
+            [ -r "$f" ] || continue
+            if grep -qE "server_name[^;]*[[:space:]]${host_re}([[:space:];]|\$)" "$f" &&
+               grep -qE "^[[:space:]]*root[[:space:]]+${SITE_PATH}/?;" "$f"; then
+              found="$f"
+            fi
+          done
+          if [ -z "$found" ]; then
+            echo "::error::No readable Nginx config serves $SITE_HOST from $SITE_PATH. Deploy stopped so no other site is touched."
+            exit 1
+          fi
+          echo "$SITE_HOST is served from $SITE_PATH ($found)"
+
+          for marker in index.php artisan .env package.json composer.json wp-config.php manage.py; do
+            if [ -e "$SITE_PATH/$marker" ]; then
+              echo "::error::$SITE_PATH contains $marker, so it looks like an application. Deploy stopped."
+              exit 1
+            fi
+          done
+          echo "Safety checks passed."
+          REMOTE
+
+      - name: Back up the current site
+        run: |
+          ssh vps "SITE_PATH='$SITE_PATH' bash -s" <<'REMOTE'
+          set -eu
+          backup="$HOME/innotec-backups/$(date +%Y%m%d-%H%M%S).tar.gz"
+          mkdir -p "$(dirname "$backup")"
+          tar -czf "$backup" -C "$SITE_PATH" .
+          echo "Backup saved to $backup"
+          # Keep the 10 most recent backups
+          ls -1t "$HOME"/innotec-backups/*.tar.gz | tail -n +11 | xargs -r rm -f
+          REMOTE
+
+      - name: Upload the site
+        run: rsync -az --delete -e ssh innotec/public/ "vps:$SITE_PATH/"

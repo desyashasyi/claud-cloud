@@ -1,0 +1,9 @@
+{{ define "main" }}
+<main class="wrap">
+  <article class="prose">
+    <p class="eyebrow">{{ with .Section }}{{ . | humanize }}{{ end }}{{ if eq .Section "news" }} · <time datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date.Format "2 January 2006" }}</time>{{ end }}</p>
+    <h1 class="page-title">{{ .Title }}</h1>
+    {{ .Content }}
+  </article>
+</main>
+{{ end }}

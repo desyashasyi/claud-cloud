@@ -1,0 +1,21 @@
+{{ define "main" }}
+<main class="wrap">
+  <h1 class="page-title">{{ .Title }}</h1>
+  {{ with .Content }}<div class="lead prose">{{ . }}</div>{{ end }}
+
+  {{ $pubs := site.Data.publications.publications | default slice }}
+  {{ if $pubs }}
+    {{ $years := slice }}
+    {{ range $pubs }}{{ $years = $years | append (string .year) }}{{ end }}
+    {{ range (sort ($years | uniq) "value" "desc") }}
+      {{ $y := . }}
+      <h2 class="pub-year">{{ $y }}</h2>
+      <ol class="pubs">
+        {{ range $pubs }}{{ if eq (string .year) $y }}{{ partial "pub-item.html" . }}{{ end }}{{ end }}
+      </ol>
+    {{ end }}
+  {{ else }}
+    <p class="empty">Publications will be listed here.</p>
+  {{ end }}
+</main>
+{{ end }}

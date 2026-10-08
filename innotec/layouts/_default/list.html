@@ -1,0 +1,31 @@
+{{ define "main" }}
+<main class="wrap">
+  <h1 class="page-title">{{ .Title }}</h1>
+  {{ with .Content }}<div class="lead prose">{{ . }}</div>{{ end }}
+
+  {{ if eq .Section "news" }}
+    {{ with .Pages.ByDate.Reverse }}
+      <ul class="news">
+        {{ range . }}
+          <li><time datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date.Format "2 Jan 2006" }}</time><a href="{{ .RelPermalink }}">{{ .Title }}</a></li>
+        {{ end }}
+      </ul>
+    {{ else }}
+      <p class="empty">No news yet.</p>
+    {{ end }}
+  {{ else }}
+    {{ with .Pages.ByWeight }}
+      <div class="grid">
+        {{ range . }}
+          <article class="card">
+            <h3><a href="{{ .RelPermalink }}">{{ .Title }}</a></h3>
+            <p>{{ .Summary | plainify | truncate 160 }}</p>
+          </article>
+        {{ end }}
+      </div>
+    {{ else }}
+      <p class="empty">Nothing here yet.</p>
+    {{ end }}
+  {{ end }}
+</main>
+{{ end }}

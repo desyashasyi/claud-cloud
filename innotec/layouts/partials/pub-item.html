@@ -1,0 +1,11 @@
+<li>
+  <div class="title">{{ .title }}</div>
+  <div class="meta">{{ delimit .authors ", " }}{{ with .venue }}. <em>{{ . }}</em>{{ end }}{{ with .year }}, {{ . }}{{ end }}.</div>
+  {{ if or .doi .url .pdf }}
+  <div class="links">
+    {{ with .doi }}<a href="https://doi.org/{{ . }}" rel="noopener">DOI</a>{{ end }}
+    {{ with .url }}<a href="{{ . }}" rel="noopener">Link</a>{{ end }}
+    {{ with .pdf }}<a href="{{ . }}" rel="noopener">PDF</a>{{ end }}
+  </div>
+  {{ end }}
+</li>

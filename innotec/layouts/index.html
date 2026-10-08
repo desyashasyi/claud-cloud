@@ -1,0 +1,44 @@
+{{ define "main" }}
+<div class="hero">
+  <div class="wrap">
+    <p class="eyebrow">Research group · {{ site.Params.affiliation }}</p>
+    <h1>{{ site.Title }}</h1>
+    <p>{{ site.Params.tagline }}</p>
+  </div>
+</div>
+
+<main class="wrap">
+  {{ with .Content }}<section class="prose">{{ . }}</section>{{ end }}
+
+  <section>
+    <h2 class="section-title">Research <a href="{{ "projects/" | relURL }}">All projects</a></h2>
+    {{ $projects := where site.RegularPages "Section" "projects" }}
+    {{ if $projects }}
+      <div class="grid">
+        {{ range first 3 $projects.ByWeight }}
+          <article class="card">
+            <h3><a href="{{ .RelPermalink }}">{{ .Title }}</a></h3>
+            <p>{{ .Summary | plainify | truncate 140 }}</p>
+          </article>
+        {{ end }}
+      </div>
+    {{ else }}
+      <p class="empty">No projects yet.</p>
+    {{ end }}
+  </section>
+
+  <section>
+    <h2 class="section-title">Latest news <a href="{{ "news/" | relURL }}">All news</a></h2>
+    {{ $news := where site.RegularPages "Section" "news" }}
+    {{ if $news }}
+      <ul class="news">
+        {{ range first 5 $news.ByDate.Reverse }}
+          <li><time datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date.Format "2 Jan 2006" }}</time><a href="{{ .RelPermalink }}">{{ .Title }}</a></li>
+        {{ end }}
+      </ul>
+    {{ else }}
+      <p class="empty">No news yet.</p>
+    {{ end }}
+  </section>
+</main>
+{{ end }}

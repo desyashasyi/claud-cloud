@@ -1,0 +1,11 @@
+<header class="site-header">
+  <div class="wrap">
+    <a class="brand" href="{{ "/" | relURL }}">Inno<span>Tec</span></a>
+    <nav class="nav" aria-label="Main">
+      {{ $current := . }}
+      {{ range site.Menus.main }}
+        <a href="{{ .URL }}"{{ if $current.IsMenuCurrent "main" . }} aria-current="page"{{ end }}>{{ .Name }}</a>
+      {{ end }}
+    </nav>
+  </div>
+</header>

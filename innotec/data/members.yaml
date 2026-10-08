@@ -1,0 +1,10 @@
+# One entry per person. group must be one of: Faculty, Researchers, Students, Alumni.
+# photo is optional: put the image in static/images/ and write /images/name.jpg.
+# TODO: replace the example below with real members.
+members:
+  - name: "Example Member"
+    group: "Faculty"
+    role: "Group Lead"
+    interests: "Placeholder research interests"
+    link: ""
+    photo: ""

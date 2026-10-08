@@ -1,0 +1,33 @@
+baseURL = "https://innotec.techupi.id/"
+languageCode = "en"
+title = "InnoTec Research Group"
+disableKinds = ["taxonomy", "term"]
+enableRobotsTXT = true
+
+[params]
+  # TODO: replace the placeholders below with the group's real details.
+  tagline = "Research group placeholder tagline: one sentence on what the group studies."
+  description = "Placeholder description of the InnoTec research group."
+  affiliation = "Electrical Engineering, Universitas Pendidikan Indonesia"
+  email = "cto@techupi.id"
+
+[menus]
+  [[menus.main]]
+    name = "Members"
+    pageRef = "/members"
+    weight = 10
+  [[menus.main]]
+    name = "Research"
+    pageRef = "/projects"
+    weight = 20
+  [[menus.main]]
+    name = "Publications"
+    pageRef = "/publications"
+    weight = 30
+  [[menus.main]]
+    name = "News"
+    pageRef = "/news"
+    weight = 40
+
+[markup.goldmark.renderer]
+  unsafe = false

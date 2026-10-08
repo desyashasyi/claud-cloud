@@ -1,0 +1,11 @@
+<article class="card">
+  {{ with .photo }}
+    <img class="avatar" src="{{ . | relURL }}" alt="">
+  {{ else }}
+    <div class="avatar" aria-hidden="true">{{ substr .name 0 1 }}</div>
+  {{ end }}
+  <h3>{{ .name }}</h3>
+  {{ with .role }}<p class="role">{{ . }}</p>{{ end }}
+  {{ with .interests }}<p>{{ . }}</p>{{ end }}
+  {{ with .link }}<p><a href="{{ . }}" rel="noopener">Profile</a></p>{{ end }}
+</article>

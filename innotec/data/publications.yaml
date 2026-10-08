@@ -1,0 +1,13 @@
+# One entry per publication. Newest year is listed first on the site.
+# doi, url, and pdf are optional.
+# TODO: add the group's real publications. Leave the list empty until then.
+publications: []
+
+# Example entry:
+#  - title: "Paper title"
+#    authors: ["A. Author", "B. Author"]
+#    venue: "Journal or conference name"
+#    year: 2026
+#    doi: "10.xxxx/xxxxx"
+#    url: ""
+#    pdf: ""
