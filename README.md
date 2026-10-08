@@ -6,7 +6,7 @@
 |---|---|---|
 | ArSys | Final project & thesis management | https://arsys.techupi.id |
 | Programee | Programming classes | https://programee.techupi.id |
-| IoT-CLab | Remote IoT laboratory | https://clab.techupi.id |
+| CLab | Remote IoT laboratory | https://clab.techupi.id |
 | ArsipM | Archive & accreditation readiness | https://archim.techupi.id |
 
 App screenshots live in `screenshots/`; click any screenshot on the page to enlarge it.
