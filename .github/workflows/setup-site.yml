@@ -1,0 +1,98 @@
+name: Set up a new static site (folder + Nginx)
+
+on:
+  workflow_dispatch:
+    inputs:
+      host:
+        description: Subdomain to set up, e.g. innotec.techupi.id (its config must exist in deploy/nginx/<host>.conf)
+        required: true
+        default: innotec.techupi.id
+
+jobs:
+  setup:
+    runs-on: ubuntu-latest
+    env:
+      HOST: ${{ inputs.host }}
+      VPS_HOST: ${{ secrets.VPS_HOST }}
+      VPS_USER: ${{ secrets.VPS_USER }}
+      VPS_PORT: ${{ secrets.VPS_PORT }}
+      VPS_SSH_KEY: ${{ secrets.VPS_SSH_KEY }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Validate input and config file
+        id: cfg
+        run: |
+          if ! printf '%s' "$HOST" | grep -qE '^[a-z0-9-]+\.techupi\.id$'; then
+            echo "::error::Only single-level subdomains of techupi.id are allowed."
+            exit 1
+          fi
+          conf="deploy/nginx/$HOST.conf"
+          [ -f "$conf" ] || { echo "::error::$conf does not exist in the repo."; exit 1; }
+          # The config must only serve this host, from a folder under /var/www
+          names=$(grep -hoE 'server_name[^;]+' "$conf" | sed 's/server_name//' | tr -s ' \n' ' ' | xargs)
+          [ "$names" = "$HOST" ] || { echo "::error::$conf must have server_name $HOST only (found: $names)."; exit 1; }
+          root=$(grep -hoE '^[[:space:]]*root[[:space:]]+[^;]+' "$conf" | awk '{print $2}')
+          printf '%s' "$root" | grep -qE '^/var/www/[a-z0-9-]+$' || { echo "::error::root must be /var/www/<name> (found: $root)."; exit 1; }
+          echo "root=$root" >> "$GITHUB_OUTPUT"
+          echo "conf=$conf" >> "$GITHUB_OUTPUT"
+
+      - name: Set up SSH
+        run: |
+          mkdir -p ~/.ssh && chmod 700 ~/.ssh
+          printf '%s\n' "$VPS_SSH_KEY" | tr -d '\r' > ~/.ssh/deploy_key
+          chmod 600 ~/.ssh/deploy_key
+          ssh-keyscan -T 15 -p "${VPS_PORT:-22}" "$VPS_HOST" > ~/.ssh/known_hosts
+          cat > ~/.ssh/config <<EOF
+          Host vps
+            HostName $VPS_HOST
+            User $VPS_USER
+            Port ${VPS_PORT:-22}
+            IdentityFile ~/.ssh/deploy_key
+            IdentitiesOnly yes
+          EOF
+
+      - name: Create the folder and enable the Nginx config
+        env:
+          ROOT: ${{ steps.cfg.outputs.root }}
+          CONF: ${{ steps.cfg.outputs.conf }}
+        run: |
+          scp -q "$CONF" "vps:/tmp/$HOST.conf"
+          ssh vps "HOST='$HOST' ROOT='$ROOT' bash -s" <<'REMOTE'
+          set -euo pipefail
+          sudo -n true 2>/dev/null || { echo "::error::The SSH user cannot run sudo without a password."; exit 1; }
+
+          avail="/etc/nginx/sites-available/$HOST"
+          enabled="/etc/nginx/sites-enabled/$HOST"
+          host_re=$(printf '%s' "$HOST" | sed 's/\./\\./g')
+
+          # Never touch an existing site
+          if sudo test -e "$avail" || sudo test -e "$enabled"; then
+            echo "::error::$avail or $enabled already exists. Nothing changed."
+            exit 1
+          fi
+          if sudo grep -qlE "server_name[^;]*[[:space:]]${host_re}([[:space:];]|\$)" /etc/nginx/sites-enabled/* /etc/nginx/conf.d/*.conf 2>/dev/null; then
+            echo "::error::Another Nginx config already serves $HOST. Nothing changed."
+            exit 1
+          fi
+
+          sudo nginx -t   # the current config must be healthy before we add anything
+
+          sudo mkdir -p "$ROOT"
+          sudo chown -R "$(id -un):www-data" "$ROOT"
+          sudo chmod 755 "$ROOT"
+          echo "Folder ready: $ROOT"
+
+          sudo install -m 644 "/tmp/$HOST.conf" "$avail"
+          sudo ln -s "$avail" "$enabled"
+          rm -f "/tmp/$HOST.conf"
+
+          if ! sudo nginx -t; then
+            echo "::error::Nginx config test failed. Removing the new config again."
+            sudo rm -f "$enabled" "$avail"
+            sudo nginx -t
+            exit 1
+          fi
+          sudo systemctl reload nginx
+          echo "Nginx now serves $HOST from $ROOT (HTTP only until certbot runs)."
+          REMOTE
