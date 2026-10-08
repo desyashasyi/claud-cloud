@@ -60,7 +60,10 @@ jobs:
           if [ -n "$VPS_KNOWN_HOSTS" ]; then
             printf '%s\n' "$VPS_KNOWN_HOSTS" > ~/.ssh/known_hosts
           else
-            ssh-keyscan -p "${VPS_PORT:-22}" "$VPS_HOST" > ~/.ssh/known_hosts
+            if ! ssh-keyscan -T 15 -p "${VPS_PORT:-22}" "$VPS_HOST" > ~/.ssh/known_hosts || [ ! -s ~/.ssh/known_hosts ]; then
+              echo "::error::Cannot reach SSH on VPS_HOST port ${VPS_PORT:-22}. If VPS_HOST is a domain proxied by Cloudflare (orange cloud), use the server's IP address instead. Also check that the firewall allows SSH from the internet and that VPS_PORT is right."
+              exit 1
+            fi
           fi
           cat > ~/.ssh/config <<EOF
           Host vps
