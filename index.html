@@ -1,0 +1,131 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Galeri Aplikasi</title>
+<style>
+  :root {
+    --bg: #f5f5f7; --surface: #ffffff; --text: #1d1d1f; --muted: #6e6e73;
+    --border: #e3e3e8; --accent: #8b1ee6; --shadow: 0 1px 3px rgba(0,0,0,.08);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #121214; --surface: #1c1c1f; --text: #f2f2f4; --muted: #a1a1a8;
+      --border: #2c2c31; --accent: #c084fc; --shadow: none;
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg: #121214; --surface: #1c1c1f; --text: #f2f2f4; --muted: #a1a1a8;
+    --border: #2c2c31; --accent: #c084fc; --shadow: none;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; background: var(--bg); color: var(--text);
+    font: 16px/1.5 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  }
+  main { max-width: 1100px; margin: 0 auto; padding: 40px 16px 64px; }
+  h1 { font-size: 1.75rem; margin: 0 0 4px; }
+  .lead { color: var(--muted); margin: 0 0 32px; }
+  .grid { display: grid; gap: 24px; }
+  figure {
+    margin: 0; background: var(--surface); border: 1px solid var(--border);
+    border-radius: 12px; overflow: hidden; box-shadow: var(--shadow);
+    display: flex; flex-direction: column;
+  }
+  figure.phone .shot img { height: 520px; }
+  @media (min-width: 720px) {
+    figure.phone { flex-direction: row; }
+    figure.phone .shot { width: 300px; flex: none; border-bottom: 0; border-right: 1px solid var(--border); }
+    figure.phone figcaption { align-self: center; padding: 24px; }
+  }
+  .shot {
+    display: block; width: 100%; padding: 0; border: 0; cursor: zoom-in;
+    background: var(--bg); border-bottom: 1px solid var(--border);
+  }
+  .shot img { display: block; width: 100%; height: auto; object-fit: contain; }
+  figcaption { padding: 14px 16px 16px; }
+  figcaption strong { display: block; }
+  figcaption .url { color: var(--accent); font-size: .875rem; }
+  figcaption p { margin: 6px 0 0; color: var(--muted); font-size: .9375rem; }
+  dialog {
+    border: 0; padding: 0; background: transparent; max-width: 96vw; max-height: 96vh;
+  }
+  dialog::backdrop { background: rgba(0,0,0,.85); }
+  dialog img { display: block; max-width: 96vw; max-height: 88vh; border-radius: 8px; cursor: zoom-out; }
+  dialog p { color: #fff; text-align: center; margin: 8px 0 0; }
+</style>
+</head>
+<body>
+<main>
+  <h1>Galeri Aplikasi</h1>
+  <p class="lead">Tangkapan layar aplikasi yang dikembangkan. Klik gambar untuk memperbesar.</p>
+
+  <div class="grid">
+    <figure class="phone">
+      <button class="shot" type="button"><img src="screenshots/arsys-mobile-home.png" alt="ArSys versi mobile: halaman Home dengan sambutan pengguna, pengumuman, menu staf, dan pilihan login sebagai peran lain" loading="lazy"></button>
+      <figcaption>
+        <strong>ArSys — Aplikasi Mobile</strong>
+        <p>Halaman Home: profil dan peran pengguna, pengumuman, menu Research Topics, serta pindah peran (Super Admin, Ketua Program Studi, Spesialisasi). Navigasi bawah: Supervise, Review, Pre, Final.</p>
+      </figcaption>
+    </figure>
+
+    <figure>
+      <button class="shot" type="button"><img src="screenshots/iot-clab-dashboard.png" alt="IoT-CLab Remote Lab: dashboard superadmin dengan jumlah pengguna, admin, dosen, mahasiswa, dan status sistem" loading="lazy"></button>
+      <figcaption>
+        <strong>IoT-CLab — Remote Lab</strong>
+        <p>Dashboard Superadmin: ringkasan 49 pengguna (3 admin, 7 dosen, 37 mahasiswa) dan status integrasi GitHub, penyedia AI, Moodle, serta mode pemeliharaan.</p>
+      </figcaption>
+    </figure>
+
+    <figure>
+      <button class="shot" type="button"><img src="screenshots/arsipm-akreditasi.png" alt="ArsipM: halaman Kelengkapan Akreditasi dengan pemilih tahun akademik TS dan tabel butir kriteria" loading="lazy"></button>
+      <figcaption>
+        <strong>ArsipM — Kelengkapan Akreditasi</strong>
+        <span class="url">archim.techupi.id</span>
+        <p>Pemantauan bukti akreditasi per butir untuk TS, TS-1, dan TS-2, dengan filter kelompok, PJ, dan pendamping serta persentase butir yang sudah memiliki dokumen disetujui.</p>
+      </figcaption>
+    </figure>
+
+    <figure>
+      <button class="shot" type="button"><img src="screenshots/programee-tasks-1.png" alt="Programee: daftar tugas kelas Algoritma dan Pemrograman TE01" loading="lazy"></button>
+      <figcaption>
+        <strong>Programee — Tasks Kelas</strong>
+        <span class="url">programee.techupi.id</span>
+        <p>Kelas Algoritma dan Pemrograman — TE01: daftar tugas personal dan kelompok beserta tenggat waktunya.</p>
+      </figcaption>
+    </figure>
+
+    <figure>
+      <button class="shot" type="button"><img src="screenshots/programee-tasks-2.png" alt="Programee: daftar tugas kelas dengan baris Latihan pertemuan 5 disorot" loading="lazy"></button>
+      <figcaption>
+        <strong>Programee — Tasks Kelas (hover)</strong>
+        <span class="url">programee.techupi.id</span>
+        <p>Tampilan yang sama saat baris tugas disorot; menu titik tiga di tiap baris untuk aksi tugas.</p>
+      </figcaption>
+    </figure>
+  </div>
+</main>
+
+<dialog id="viewer">
+  <img alt="">
+  <p></p>
+</dialog>
+
+<script>
+  const viewer = document.getElementById('viewer');
+  const big = viewer.querySelector('img');
+  const cap = viewer.querySelector('p');
+  document.querySelectorAll('.shot').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const img = btn.querySelector('img');
+      big.src = img.src;
+      big.alt = img.alt;
+      cap.textContent = btn.closest('figure').querySelector('strong').textContent;
+      viewer.showModal();
+    });
+  });
+  viewer.addEventListener('click', () => viewer.close());
+</script>
+</body>
+</html>
