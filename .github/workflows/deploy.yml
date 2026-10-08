@@ -107,6 +107,46 @@ jobs:
             echo "--- done ---"'
           echo "::notice::Copy the root/DocumentRoot folder for techupi.id above into the VPS_PATH secret, then run this workflow again."
 
+      - name: Safety checks (no changes)
+        if: steps.check.outputs.ready == 'true'
+        run: |
+          [ "$VPS_PATH" != "/" ] && VPS_PATH="${VPS_PATH%/}"
+          case "$VPS_PATH" in
+            /|/var|/var/www|/var/www/|/var/www/html|/home|/root|/etc|/usr|/srv|/opt)
+              echo "::error::VPS_PATH '$VPS_PATH' is too broad. Use the folder that only techupi.id serves."
+              exit 1 ;;
+          esac
+          ssh vps "set -e
+            p='$VPS_PATH'
+            [ -d \"\$p\" ] || { echo '::error::VPS_PATH does not exist on the server.'; exit 1; }
+
+            # VPS_PATH must be the web root of a server block for techupi.id
+            found=''
+            for dir in /etc/nginx/sites-enabled /etc/nginx/conf.d; do
+              [ -d \"\$dir\" ] || continue
+              for f in \"\$dir\"/*; do
+                [ -f \"\$f\" ] || continue
+                if grep -qE 'server_name[^;]*[[:space:]]techupi\.id([[:space:];]|\$)' \"\$f\" &&
+                   grep -qE \"^[[:space:]]*root[[:space:]]+\$p/?;\" \"\$f\"; then
+                  found=\"\$f\"
+                fi
+              done
+            done
+            if [ -z \"\$found\" ]; then
+              echo '::error::No Nginx config for techupi.id uses VPS_PATH as its root. Deploy stopped so no other site is touched.'
+              exit 1
+            fi
+            echo \"techupi.id is served from \$p (\$found)\"
+
+            # Refuse folders that hold an application rather than a static page
+            for marker in index.php artisan .env package.json composer.json wp-config.php manage.py; do
+              if [ -e \"\$p/\$marker\" ]; then
+                echo \"::error::\$p contains \$marker, so it looks like an application. Deploy stopped.\"
+                exit 1
+              fi
+            done
+            echo 'Safety checks passed.'"
+
       - name: Back up the current landing page
         if: steps.check.outputs.ready == 'true'
         run: |

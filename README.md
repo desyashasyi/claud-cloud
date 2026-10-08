@@ -17,6 +17,14 @@ Deploy `index.html` together with the `screenshots/` folder.
 
 `.github/workflows/deploy.yml` uploads `index.html` and `screenshots/` to the VPS over SSH on every push that changes them (or manually from the Actions tab). Before each upload it backs up the current files to `~/techupi-backups/<timestamp>/` on the server. Other files in the web root are left untouched.
 
+To protect the other apps on the server, the deploy stops before writing anything unless:
+
+- an Nginx config in `sites-enabled` or `conf.d` has `server_name techupi.id` with `root` set to `VPS_PATH`;
+- `VPS_PATH` holds no application files (`index.php`, `artisan`, `.env`, `package.json`, `composer.json`, `wp-config.php`, `manage.py`);
+- `VPS_PATH` is not a broad folder such as `/`, `/var/www`, or `/etc`.
+
+The workflow never edits web server config, restarts services, or deletes files.
+
 Add these repository secrets (Settings → Secrets and variables → Actions):
 
 | Secret | Value |
