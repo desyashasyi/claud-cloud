@@ -1,0 +1,84 @@
+name: Diagnose a subdomain (read-only)
+
+on:
+  workflow_dispatch:
+    inputs:
+      subdomain:
+        description: Host name to inspect, e.g. fetnet.techupi.id
+        required: true
+        default: fetnet.techupi.id
+
+jobs:
+  diagnose:
+    runs-on: ubuntu-latest
+    env:
+      VPS_HOST: ${{ secrets.VPS_HOST }}
+      VPS_USER: ${{ secrets.VPS_USER }}
+      VPS_PORT: ${{ secrets.VPS_PORT }}
+      VPS_SSH_KEY: ${{ secrets.VPS_SSH_KEY }}
+      TARGET: ${{ inputs.subdomain }}
+    steps:
+      - name: Set up SSH
+        run: |
+          mkdir -p ~/.ssh && chmod 700 ~/.ssh
+          printf '%s\n' "$VPS_SSH_KEY" | tr -d '\r' > ~/.ssh/deploy_key
+          chmod 600 ~/.ssh/deploy_key
+          ssh-keyscan -T 15 -p "${VPS_PORT:-22}" "$VPS_HOST" > ~/.ssh/known_hosts
+          cat > ~/.ssh/config <<EOF
+          Host vps
+            HostName $VPS_HOST
+            User $VPS_USER
+            Port ${VPS_PORT:-22}
+            IdentityFile ~/.ssh/deploy_key
+            IdentitiesOnly yes
+          EOF
+
+      - name: Inspect Nginx and the app (no changes)
+        run: |
+          case "$TARGET" in
+            *[!a-zA-Z0-9.-]*|"") echo "::error::Invalid host name"; exit 1 ;;
+          esac
+          ssh vps "TARGET='$TARGET' bash -s" <<'REMOTE'
+          echo "== Config files mentioning $TARGET =="
+          files=$(grep -rlF "$TARGET" /etc/nginx/sites-enabled /etc/nginx/conf.d 2>/dev/null)
+          echo "$files"
+          for f in $files; do
+            echo
+            echo "=================== $f ==================="
+            grep -vE 'ssl_certificate_key|^\s*#' "$f"
+          done
+
+          echo
+          echo "== Which server blocks listen on 443, in load order =="
+          for f in /etc/nginx/sites-enabled/* /etc/nginx/conf.d/*.conf; do
+            [ -f "$f" ] || continue
+            if grep -qE 'listen[^;]*443' "$f"; then
+              names=$(grep -hoE 'server_name[^;]+' "$f" | sed 's/server_name//' | tr -s ' ' | sort -u | tr '\n' ' ')
+              default=$(grep -qE 'listen[^;]*443[^;]*default_server' "$f" && echo ' [default_server]')
+              echo "$f:$names$default"
+            fi
+          done
+
+          echo
+          echo "== Certificates for $TARGET =="
+          ls -d /etc/letsencrypt/live/*/ 2>/dev/null | grep -F "$TARGET" || echo "(no Let's Encrypt certificate folder named after $TARGET)"
+
+          echo
+          echo "== Local responses (Host: $TARGET) =="
+          echo "-- http://127.0.0.1 --"
+          curl -s -o /dev/null -w 'status %{http_code}, redirect %{redirect_url}\n' -H "Host: $TARGET" http://127.0.0.1/ || true
+          echo "-- https://127.0.0.1 (SNI $TARGET) --"
+          curl -sk -o /dev/null -w 'status %{http_code}, redirect %{redirect_url}\n' --resolve "$TARGET:443:127.0.0.1" "https://$TARGET/" || true
+          echo "-- certificate presented on 443 for $TARGET --"
+          echo | openssl s_client -connect 127.0.0.1:443 -servername "$TARGET" 2>/dev/null | openssl x509 -noout -subject -ext subjectAltName 2>/dev/null || true
+
+          echo
+          echo "== Upstream ports used by $TARGET =="
+          for p in $(grep -hoE 'proxy_pass http://127\.0\.0\.1:[0-9]+' $files 2>/dev/null | grep -oE '[0-9]+$' | sort -u); do
+            code=$(curl -s -o /dev/null -w '%{http_code}' "http://127.0.0.1:$p/" || true)
+            echo "port $p -> HTTP $code"
+          done
+          echo
+          echo "== Docker containers =="
+          docker ps --format '{{.Names}}  {{.Ports}}' 2>/dev/null || echo "(docker not available to this user)"
+          REMOTE
