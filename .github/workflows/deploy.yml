@@ -55,8 +55,22 @@ jobs:
         run: |
           mkdir -p ~/.ssh
           chmod 700 ~/.ssh
-          printf '%s\n' "$VPS_SSH_KEY" > ~/.ssh/deploy_key
+          # Normalize the pasted key: drop Windows line endings, and rebuild
+          # the line breaks if the whole key was pasted as one line.
+          key=$(printf '%s' "$VPS_SSH_KEY" | tr -d '\r')
+          if [ "$(printf '%s\n' "$key" | wc -l)" -le 1 ]; then
+            header=$(printf '%s' "$key" | grep -oE -- '-----BEGIN [A-Z ]+-----' || true)
+            footer=$(printf '%s' "$key" | grep -oE -- '-----END [A-Z ]+-----' || true)
+            body=${key#*"$header"}
+            body=${body%"$footer"*}
+            key=$(printf '%s\n' "$header"; printf '%s' "$body" | tr -s ' ' '\n' | sed '/^$/d'; printf '%s\n' "$footer")
+          fi
+          printf '%s\n' "$key" > ~/.ssh/deploy_key
           chmod 600 ~/.ssh/deploy_key
+          if ! ssh-keygen -y -f ~/.ssh/deploy_key > /dev/null; then
+            echo "::error::VPS_SSH_KEY is not a valid private key. Paste the full contents of the .pem file, including the -----BEGIN ... PRIVATE KEY----- and -----END ... PRIVATE KEY----- lines. A .ppk (PuTTY) file must be converted first: puttygen key.ppk -O private-openssh -o key.pem"
+            exit 1
+          fi
           if [ -n "$VPS_KNOWN_HOSTS" ]; then
             printf '%s\n' "$VPS_KNOWN_HOSTS" > ~/.ssh/known_hosts
           else
