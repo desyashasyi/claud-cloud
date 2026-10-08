@@ -1,5 +1,4 @@
 ---
-title: "InnoTec Research Group"
-# TODO: replace the paragraph below with two or three sentences about the group's mission and research focus.
+title: "InnoTEC Research Group"
 ---
-InnoTec is a research group in Electrical Engineering at Universitas Pendidikan Indonesia. This paragraph is a placeholder: describe the group's focus, the problems it works on, and who it collaborates with.
+InnoTEC (Innovation in Telecommunication, Electronics, and Computer) is a research group at Universitas Pendidikan Indonesia. The group brings together lecturers working across telecommunication, electronics, and computer engineering.

@@ -1,15 +1,14 @@
 baseURL = "https://innotec.techupi.id/"
 languageCode = "en"
-title = "InnoTec Research Group"
+title = "InnoTEC Research Group"
 disableKinds = ["taxonomy", "term"]
 enableRobotsTXT = true
 
 [params]
-  # TODO: replace the placeholders below with the group's real details.
-  tagline = "Research group placeholder tagline: one sentence on what the group studies."
-  description = "Placeholder description of the InnoTec research group."
-  affiliation = "Electrical Engineering, Universitas Pendidikan Indonesia"
-  email = "cto@techupi.id"
+  tagline = "Innovation in Telecommunication, Electronics, and Computer"
+  description = "InnoTEC (Innovation in Telecommunication, Electronics, and Computer) is a research group at Universitas Pendidikan Indonesia."
+  affiliation = "Universitas Pendidikan Indonesia"
+  address = "Jl. Setiabudi 229, Sukasari, Bandung 40154, Indonesia"
 
 [menus]
   [[menus.main]]

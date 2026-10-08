@@ -1,4 +1,4 @@
 ---
 title: "Members"
 ---
-Faculty, researchers, and students in the group.
+The lecturers who make up the InnoTEC research group.

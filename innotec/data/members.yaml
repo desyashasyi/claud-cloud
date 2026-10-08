@@ -1,10 +1,29 @@
 # One entry per person. group must be one of: Faculty, Researchers, Students, Alumni.
+# initial: letter shown in the avatar circle when there is no photo.
 # photo is optional: put the image in static/images/ and write /images/name.jpg.
-# TODO: replace the example below with real members.
+# interests and link are optional.
 members:
-  - name: "Example Member"
+  - name: "Iwan Kustiawan, Ph.D"
+    initial: "I"
     group: "Faculty"
-    role: "Group Lead"
-    interests: "Placeholder research interests"
-    link: ""
-    photo: ""
+    role: "Head"
+  - name: "Dr. Aip Saripudin, M.T."
+    initial: "A"
+    group: "Faculty"
+    role: "Secretary"
+  - name: "Arjuni Budi Pantjawati, M.T."
+    initial: "A"
+    group: "Faculty"
+    role: "Member"
+  - name: "Didin Wahyudin, Ph.D"
+    initial: "D"
+    group: "Faculty"
+    role: "Member"
+  - name: "Siscka Elvyanti, Ph.D"
+    initial: "S"
+    group: "Faculty"
+    role: "Member"
+  - name: "Tommi Hariyadi, Ph.D"
+    initial: "T"
+    group: "Faculty"
+    role: "Member"
