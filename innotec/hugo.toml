@@ -9,6 +9,7 @@ enableRobotsTXT = true
   description = "InnoTEC (Innovation in Telecommunication, Electronics, and Computer) is a research group at Universitas Pendidikan Indonesia."
   affiliation = "Universitas Pendidikan Indonesia"
   address = "Jl. Setiabudi 229, Sukasari, Bandung 40154, Indonesia"
+  email = "innotec@upi.edu"
 
 [menus]
   [[menus.main]]
